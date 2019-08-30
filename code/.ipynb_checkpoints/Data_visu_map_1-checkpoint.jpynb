@@ -1,0 +1,727 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:00:11.631606Z",
+     "start_time": "2019-08-28T20:00:11.629238Z"
+    }
+   },
+   "source": [
+    "# Towards Data Science\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:29:32.823138Z",
+     "start_time": "2019-08-28T20:29:32.817102Z"
+    }
+   },
+   "source": [
+    "- To view this application in interactive mode you need to set up a local Bokeh server. Open a command line window in your current directory and execute :\n",
+    "- --µ>bokeh serve --show filename.ipynb\n",
+    "- Click on the link prompted to open the application in your browser. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:00:33.995271Z",
+     "start_time": "2019-08-28T20:00:33.985801Z"
+    }
+   },
+   "source": [
+    "- A Complete Guide to an Interactive Geographical Map using Python"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:01:17.904038Z",
+     "start_time": "2019-08-28T20:01:17.898879Z"
+    }
+   },
+   "source": [
+    "-  In this step by step guide, we will recreate an interactive global choropleth map on Share of Adults who are obese (1975–2016) using Python libraries and package — Pandas, Geopandas and Bokeh."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:02:08.898360Z",
+     "start_time": "2019-08-28T20:02:08.896308Z"
+    }
+   },
+   "source": [
+    "## Install Geopandas and Bokeh."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Todoo"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:03:32.730143Z",
+     "start_time": "2019-08-28T20:03:32.725692Z"
+    }
+   },
+   "source": [
+    "## Download Countries v4.1.0"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# https://www.naturalearthdata.com/\n",
+    "# For our purpose, 1–110m small scale data is good enough.\n",
+    "# Done in data/110m_physical directory"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:09:28.192519Z",
+     "start_time": "2019-08-28T20:09:28.190549Z"
+    }
+   },
+   "source": [
+    "## Prepare a xx.csv features file to plot on map"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# from WW_data treatment"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:02:28.975002Z",
+     "start_time": "2019-08-28T20:02:28.972534Z"
+    }
+   },
+   "source": [
+    "## Explore pandas and Geopandas dataframes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:10:53.349439Z",
+     "start_time": "2019-08-28T20:10:53.298948Z"
+    },
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'geopandas'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-8-a62d01c1d62e>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mgeopandas\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mgpd\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'geopandas'"
+     ]
+    }
+   ],
+   "source": [
+    "import geopandas as gpd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "shapefile = 'data/countries_110m/ne_110m_admin_0_countries.shp'\n",
+    "#Read shapefile using Geopandas\n",
+    "gdf = gpd.read_file(shapefile)[['ADMIN', 'ADM0_A3', 'geometry']]\n",
+    "#Rename columns.\n",
+    "gdf.columns = ['country', 'country_code', 'geometry']\n",
+    "gdf.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "datafile = '../data/water_scarcity1.csv'\n",
+    "#Read csv file using pandas\n",
+    "df = pd.read_csv(datafile, names = ['country', 'Population', \n",
+    "                                    'GDP_(PID)', 'Water_disposal', 'Water_withdrawal'], skiprows = 1)\n",
+    "# be careful, columns are features and rows are years\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## Filter data for years\n",
+    "#Filter data for year 2016.\n",
+    "df_2016 = df[df['year'] == 2016]\n",
+    "#Merge dataframes gdf and df_2016.\n",
+    "merged = gdf.merge(df_2016, left_on = 'country_code', right_on = 'code')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:15:44.197630Z",
+     "start_time": "2019-08-28T20:15:44.194927Z"
+    }
+   },
+   "source": [
+    "## Convert to json file"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import json\n",
+    "#Read data to json.\n",
+    "merged_json = json.loads(merged.to_json())\n",
+    "#Convert to String like object.\n",
+    "json_data = json.dumps(merged_json)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:17:11.294486Z",
+     "start_time": "2019-08-28T20:17:11.292399Z"
+    }
+   },
+   "source": [
+    "## Render featured map using Bokeh"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from bokeh.io import output_notebook, show, output_file\n",
+    "from bokeh.plotting import figure\n",
+    "from bokeh.models import GeoJSONDataSource, LinearColorMapper, ColorBar\n",
+    "from bokeh.palettes import brewer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Input GeoJSON source that contains features for plotting.\n",
+    "geosource = GeoJSONDataSource(geojson = json_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Define a sequential multi-hue color palette.\n",
+    "palette = brewer['YlGnBu'][8]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Reverse color order so that dark blue is highest value.\n",
+    "palette = palette[::-1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Instantiate LinearColorMapper that linearly maps numbers in a range, into a sequence of colors.\n",
+    "color_mapper = LinearColorMapper(palette = palette, low = 0, high = 40)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Define custom tick labels for color bar.\n",
+    "tick_labels = {'0': '0%', '5': '5%', '10':'10%', '15':'15%', '20':'20%',\n",
+    "               '25':'25%', '30':'30%','35':'35%', '40': '>40%'}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Create color bar. \n",
+    "color_bar = ColorBar(color_mapper=color_mapper, \n",
+    "                     label_standoff=8,width = 500, height = 20,\n",
+    "border_line_color=None,location = (0,0), orientation = 'horizontal', \n",
+    "                     major_label_overrides = tick_labels)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Create figure object.\n",
+    "p = figure(title = 'Share of adults who are obese, 2016', \n",
+    "           plot_height = 600 , plot_width = 950, toolbar_location = None)\n",
+    "p.xgrid.grid_line_color = None\n",
+    "p.ygrid.grid_line_color = None"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Add patch renderer to figure. \n",
+    "p.patches('xs','ys', source = geosource,fill_color = \n",
+    "          {'field' :'per_cent_obesity', 'transform' : color_mapper},\n",
+    "          line_color = 'black', line_width = 0.25, fill_alpha = 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Specify figure layout.\n",
+    "p.add_layout(color_bar, 'below')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Display figure inline in Jupyter Notebook.\n",
+    "output_notebook()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Display figure.\n",
+    "show(p)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:21:14.615479Z",
+     "start_time": "2019-08-28T20:21:14.609211Z"
+    }
+   },
+   "source": [
+    "- Sudan, South Sudan and Somaliland are missing. Also, Greenland is missing in the world map.7\n",
+    "The reason these countries have not been drawn is that one or more values corresponding to these countries are missing in our .csv file and therefore, \n",
+    "dataframe df. Let’s get this sorted as it would put off some people, and rightly so!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:21:28.655122Z",
+     "start_time": "2019-08-28T20:21:28.651066Z"
+    }
+   },
+   "source": [
+    "# Correct for missing countries"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:22:01.516854Z",
+     "start_time": "2019-08-28T20:22:01.510959Z"
+    }
+   },
+   "source": [
+    "To preserve the missing countries in our merged data frame, we perform a left merge/left outer join. Thus, every country in GeoDataframe gdf is preserved in the merged dataframe, even if the corresponding row/s are missing in the pandas dataframe df."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_2016 = df[df['year'] == 2016]\n",
+    "#Perform left merge to preserve every row in gdf.\n",
+    "merged = gdf.merge(df_yr, left_on = 'country_code', \n",
+    "                   right_on = 'code', how = 'left')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Replace NaN values to string 'No data'.\n",
+    "merged.fillna('No data', inplace = True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:23:14.681264Z",
+     "start_time": "2019-08-28T20:23:14.677688Z"
+    }
+   },
+   "source": [
+    "We also input the hex code to color code countries with ‘No data’ as an argument to color mapper."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Instantiate LinearColorMapper that maps numbers in a range linearly into a sequence of colors. \n",
+    "# Input nan_color.\n",
+    "color_mapper = LinearColorMapper(palette = palette, low = 0, high = 40, nan_color = '#d9d9d9')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:24:11.892212Z",
+     "start_time": "2019-08-28T20:24:11.888226Z"
+    }
+   },
+   "source": [
+    "# Adding interactivity"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:24:29.353510Z",
+     "start_time": "2019-08-28T20:24:29.345101Z"
+    }
+   },
+   "source": [
+    "- Our goal is to create a dynamic map that updates data based on year selected in the range of 1975–2016\n",
+    "- We will also add a hover tool which allows user to view details by just hovering the mouse over a specific country/region."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from bokeh.io import curdoc, output_notebook\n",
+    "from bokeh.models import Slider, HoverTool\n",
+    "from bokeh.layouts import widgetbox, row, column"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Define function that returns json_data for year selected by user.\n",
+    "def json_data(selectedYear):\n",
+    "    yr = selectedYear\n",
+    "    df_yr = df[df['year'] == yr]\n",
+    "    merged = gdf.merge(df_yr, left_on = 'country_code', right_on =     'code', how = 'left')\n",
+    "    merged.fillna('No data', inplace = True)\n",
+    "    merged_json = json.loads(merged.to_json())\n",
+    "    json_data = json.dumps(merged_json)\n",
+    "    return json_data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Input GeoJSON source that contains features for plotting.\n",
+    "geosource = GeoJSONDataSource(geojson = json_data(2016))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Define a sequential multi-hue color palette.\n",
+    "palette = brewer['YlGnBu'][8]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Reverse color order so that dark blue is highest obesity.\n",
+    "palette = palette[::-1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Instantiate LinearColorMapper that linearly maps numbers in a range, \n",
+    "# into a sequence of colors. Input nan_color.\n",
+    "color_mapper = LinearColorMapper(palette = palette, \n",
+    "                                 low = 0, high = 40, nan_color = '#d9d9d9')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Define custom tick labels for color bar.\n",
+    "tick_labels = {'0': '0%', '5': '5%', '10':'10%', '15':'15%', \n",
+    "               '20':'20%', '25':'25%', '30':'30%','35':'35%', '40': '>40%'}\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Add hover tool\n",
+    "hover = HoverTool(tooltips = [ ('Country/region','@country'),\n",
+    "                              ('% feature 1', '@per_cent_feature_1')])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Create color bar. \n",
+    "color_bar = ColorBar(color_mapper=color_mapper, label_standoff=8, \n",
+    "                     width = 500, height = 20,\n",
+    "                     border_line_color=None,location = (0,0), \n",
+    "                     orientation = 'horizontal', major_label_overrides = tick_labels)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Create figure object.\n",
+    "p = figure(title = 'Share of adults who are obese, 2016', \n",
+    "           plot_height = 600 , plot_width = 950, toolbar_location = None, tools = [hover])\n",
+    "p.xgrid.grid_line_color = None\n",
+    "p.ygrid.grid_line_color = None"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Specify layout\n",
+    "p.add_layout(color_bar, 'below')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Define the callback function: update_plot\n",
+    "def update_plot(attr, old, new):\n",
+    "    yr = slider.value\n",
+    "    new_data = json_data(yr)\n",
+    "    geosource.geojson = new_data\n",
+    "    p.title.text = 'Share of adults who are obese, %d' %yr"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Make a slider object: slider \n",
+    "slider = Slider(title = 'Year',start = 1975, end = 2016, step = 1, value = 2016)\n",
+    "slider.on_change('value', update_plot)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Make a column layout of widgetbox(slider) and plot, \n",
+    "# and add it to the current document\n",
+    "layout = column(p,widgetbox(slider))\n",
+    "curdoc().add_root(layout)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Display plot inline in Jupyter notebook\n",
+    "output_notebook()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Display plot\n",
+    "show(layout)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "ExecuteTime": {
+     "end_time": "2019-08-28T20:32:11.114757Z",
+     "start_time": "2019-08-28T20:32:11.103941Z"
+    }
+   },
+   "source": [
+    "- There are a few cool features in the original map on Our World in Data that I could not incorporate; like highlighting a country upon hovering, highlighting all countries when you hover over a segment on the color bar. I also could’nt figure out the display of ‘light grey’ segment for ‘No data’ in juxtaposition to color bar. \n",
+    "- If you have any comments or suggestions on how we can further enhance the application interactivity, I would love to hear them!\n",
+    "- WRITTEN BY Shivangi Patel\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  },
+  "latex_envs": {
+   "LaTeX_envs_menu_present": true,
+   "autoclose": false,
+   "autocomplete": true,
+   "bibliofile": "biblio.bib",
+   "cite_by": "apalike",
+   "current_citInitial": 1,
+   "eqLabelWithNumbers": true,
+   "eqNumInitial": 1,
+   "hotkeys": {
+    "equation": "Ctrl-E",
+    "itemize": "Ctrl-I"
+   },
+   "labels_anchors": false,
+   "latex_user_defs": false,
+   "report_style_numbering": false,
+   "user_envs_cfg": false
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": true,
+   "sideBar": true,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": true,
+   "toc_window_display": true
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
